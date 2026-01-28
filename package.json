@@ -1,0 +1,45 @@
+{
+    "name": "hedera-ui",
+    "version": "1.0.0",
+    "private": false,
+    "type": "module",
+    "files": [
+        "dist"
+    ],
+    "main": "./dist/hedera-ui.umd.cjs",
+    "module": "./dist/hedera-ui.js",
+    "types": "./dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/hedera-ui.js",
+            "require": "./dist/hedera-ui.umd.cjs"
+        },
+        "./index.css": "./dist/hedera-ui.css"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "type-check": "vue-tsc --build"
+    },
+    "peerDependencies": {
+        "vue": "^3.5.26"
+    },
+    "devDependencies": {
+        "@tsconfig/node24": "^24.0.3",
+        "@types/bun": "^1.3.5",
+        "@types/node": "^24.10.4",
+        "@vitejs/plugin-vue": "^6.0.3",
+        "@vue/tsconfig": "^0.8.1",
+        "typescript": "~5.9.3",
+        "vite": "^7.3.0",
+        "vite-plugin-dts": "^4.5.4",
+        "vue-tsc": "^3.2.2"
+    },
+    "dependencies": {
+        "@fontsource/inter": "^5.2.8",
+        "@fontsource/montserrat": "^5.2.8",
+        "@jamescoyle/vue-icon": "^0.1.2",
+        "@mdi/js": "^7.4.47"
+    }
+}
