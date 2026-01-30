@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { mdiLoading } from '@mdi/js';
 import { computed } from 'vue';
+// @ts-ignore
+import SvgIcon from '@jamescoyle/vue-icon'
 
 const props = withDefaults(defineProps<{
     type?: 'default' | 'primary' | 'secondary',
@@ -7,15 +10,27 @@ const props = withDefaults(defineProps<{
     nativeType?: 'button' | 'submit' | 'reset',
     circle?: boolean,
     size?: 'small' | 'medium' | 'large',
+    plain?: boolean,
+    disabled?: boolean,
+    fillWidth?: boolean,
+    tag?: string,
+    loading?: boolean,
+    loadingIcon?: Element | string,
 }>(), {
     type: 'default',
     round: false,
     nativeType: 'button',
     circle: false,
     size: 'medium',
+    view: false,
+    disabled: false,
+    fillWidth: false,
+    tag: 'button',
+    loading: false,
+    loadingIcon: mdiLoading,
 });
 const classButton = computed(() => {
-    let classes: string[] = [];
+    let classes: string[] = ['button'];
 
     if (props.type !== 'default') classes.push(props.type);
 
@@ -25,90 +40,146 @@ const classButton = computed(() => {
 
     if (props.size !== 'medium') classes.push(props.size)
 
+    if (props.plain) classes.push('plain');
+
+    if (props.fillWidth) classes.push('w-full');
+
+    if (props.loading) classes.push('loading');
+
     return classes.join(' ');
 })
-/* TODOS
-- ghost
-- plain
-- disabled
-- width
-- tag
-- loading
-- loading-icon
-- button groups
-*/
 </script>
 <template>
-<button :class="classButton" :type="nativeType">
-    <slot name="icon"/>
+<component :is="tag" :class="classButton" :type="nativeType" :disabled="disabled">
+    <slot
+        name="icon"
+        v-if="!loading"
+    />
+    <component
+        v-else-if="typeof loadingIcon !== 'string'"
+        :is="loadingIcon"
+        class="loadingIcon"
+    />
+    <svg-icon
+        v-else
+        type="mdi"
+        :size="20"
+        :path="loadingIcon"
+        class="loadingIcon"
+    />
     <span v-if="$slots.default">
-        <slot/>
+        <slot />
     </span>
-</button>
+</component>
 </template>
 <style scoped>
-button {
+.button {
     --size: 32px;
     font-family: var(--font-regular);
     font-size: 14px;
     display: inline-flex;
-    gap: 8px;
     align-items: center;
+    justify-content: center;
+    gap: 8px;
     padding: 6px 10px;
     height: var(--size);
     box-sizing: border-box;
-    transition: .1s ease-out;
     border: none;
     border-radius: 8px;
+    background: var(--gray-100);
     color: var(--text-primary);
-    background-color: var(--gray-100);
-    user-select: none;
-    justify-content: center;
     box-shadow: var(--shadow-inner);
+    user-select: none;
+    transition: background 0.1s ease-out;
+    min-width: 70px;
 }
-button:hover {
-    background-color: var(--gray-300);
+.button:hover:not(:disabled) {
+    background: var(--gray-300);
 }
-button:active {
-    background-color: var(--gray-400);
+.button:active:not(:disabled) {
+    background: var(--gray-400);
+}
+.button:disabled {
+    cursor: not-allowed;
+    box-shadow: none;
+    color: var(--gray-400) !important;
+}
+.button:disabled:not(.plain) {
+    background: var(--gray-100);
 }
 .primary {
-    background-color: var(--primary-500);
+    background: var(--primary-500);
     color: var(--text-dark);
-}    
-.primary:hover {
-    background-color: var(--primary-600);
 }
-.primary:active {
-    background-color: var(--primary-700);
+.primary:hover:not(:disabled) {
+    background: var(--primary-600);
+}
+.primary:active:not(:disabled) {
+    background: var(--primary-700);
 }
 .secondary {
-    background-color: var(--secondary-600);
+    background: var(--secondary-600);
     color: var(--text-dark);
 }
-.secondary:hover {
-    background-color: var(--secondary-700);
+.secondary:hover:not(:disabled) {
+    background: var(--secondary-700);
 }
-.secondary:active {
-    background-color: var(--secondary-800);
+.secondary:active:not(:disabled) {
+    background: var(--secondary-800);
 }
-.round {
-    border-radius: 100px;
+.plain {
+    background: transparent;
+    box-shadow: none;
 }
-.circle {
-    border-radius: 100px;
-    aspect-ratio: 1 / 1;
-    padding: 0 !important;
+.plain:hover:not(:disabled) {
+    background: var(--blind-color-1);
+}
+.plain:active:not(:disabled) {
+    background: var(--blind-color-2);
+}
+.plain.primary {
+    color: var(--primary-400);
+}
+.plain.secondary {
+    color: var(--secondary-400);
 }
 .large {
     --size: 40px;
     padding: 8px 14px;
     font-size: 16px;
+    min-width: 90px;
 }
 .small {
     --size: 28px;
     padding: 4px 8px;
     font-size: 13px;
+    min-width: 40px;
     gap: 6px;
+}
+.round,
+.circle {
+    border-radius: 100px;
+}
+.circle {
+    aspect-ratio: 1 / 1;
+    padding: 0 !important;
+}
+.loadingIcon {
+    animation: spin .8s linear infinite;
+}
+.loading {
+    filter: brightness(.8);
+    cursor: wait;
+}
+.plain.loading {
+    background: var(--blind-color-1);
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 </style>

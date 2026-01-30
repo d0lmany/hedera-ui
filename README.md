@@ -3,6 +3,8 @@
 **Hedera UI** - A library of components for Vue 3 with an elegant ivy design
 - Written and maintained with TypeScript & Composition API
 - This is a monorepository: it contains a general idea and documentation (`vite dev`), as well as the library itself (`vite`).
+- The full list of components is given in `vite dev`
+- The full list of changes is given in [this file](./CHANGELOG.md)
 
 ## Installation
 1. Download the repository `git clone https://github.com/d0lmany/hedera-ui`
@@ -29,3 +31,6 @@ createApp(App)
 
 5. Copy the fonts from `node_modules/hedera-ui/dist/fonts` to `public/fonts`
 6. Use in your project!
+
+## License
+This project is licensed under the MIT License v3.0 - see the [LICENSE](./LICENSE) file for more information.
