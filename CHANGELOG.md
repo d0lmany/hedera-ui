@@ -8,5 +8,6 @@ test, chore, etc
 ## Unreleased
 - feat[]:
     - CSS Variables
-    - Button component (type, round, nativeType, circle, size, plain, disabled, fillWidth, tag, loading, loadingIcon)
     - Hero section on site
+    - Button component (type, round, nativeType, circle, size, plain, disabled, fillWidth, tag, loading, loadingIcon)
+    - Button-Group component (type, round, size, plain, direction)

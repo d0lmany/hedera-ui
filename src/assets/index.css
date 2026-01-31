@@ -60,8 +60,8 @@ html {
     /* colors.special */
     --blur-white: #f9f9f97f;
     --blur-black: #1212127f;
-    --blind-color-1: #f9f9f998;
-    --blind-color-2: #f9f9f9c9;
+    --blind-color-1: rgba(18, 18, 18, 0.08);
+    --blind-color-2: rgba(18, 18, 18, 0.12);
     --shadow-inner-light-color: #f9f9f934;
     --shadow-inner-dark-color: #12121234;
     /* colors.semantic */
@@ -112,13 +112,13 @@ html {
     font-size: .8125rem;
 }
 /* Utilities.layout */
-.d-flex {
+.d-flex, .hd-button-group {
     display: flex;
 }
 .wrap {
     flex-wrap: wrap;
 }
-.fd-column {
+.fd-column, .hd-button-group.column {
     flex-direction: column;
 }
 .fd-row {
@@ -143,6 +143,105 @@ html {
 .w-full {
     width: 100%;
 }
+/* Components */
+/* Components.button/button-group */
+.hd-button {
+    --size: 32px;
+    --bg: var(--gray-100);
+    --bg-hover: var(--gray-300);
+    --bg-active: var(--gray-400);
+    --text-color: var(--text-primary);
+    --border-radius: 8px;
+
+    font-family: var(--font-regular);
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 6px 10px;
+    height: var(--size);
+    min-width: 70px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--bg);
+    color: var(--text-color);
+    box-shadow: var(--shadow-inner);
+    user-select: none;
+    transition: all 0.1s ease-out;
+    cursor: pointer;
+}
+.hd-button:disabled {
+    cursor: not-allowed;
+    box-shadow: none;
+    color: var(--gray-400) !important;
+}
+.hd-button:disabled:not(.plain) {
+    background: var(--gray-100) !important;
+}
+.hd-button-group .hd-button {
+    --border-radius: 0;
+    --group-radius: 8px;
+}
+.hd-button-group.round .hd-button {
+    --group-radius: 100px;
+}
+.hd-button-group:not(.column) .hd-button:first-child {
+    border-top-left-radius: var(--group-radius);
+    border-bottom-left-radius: var(--group-radius);
+}
+.hd-button-group:not(.column) .hd-button:last-child {
+    border-top-right-radius: var(--group-radius);
+    border-bottom-right-radius: var(--group-radius);
+}
+.hd-button-group.column .hd-button:first-child {
+    border-top-left-radius: var(--group-radius);
+    border-top-right-radius: var(--group-radius);
+}
+.hd-button-group.column .hd-button:last-child {
+    border-bottom-left-radius: var(--group-radius);
+    border-bottom-right-radius: var(--group-radius);
+}
+.hd-button-group.primary .hd-button, .hd-button.primary { 
+    --bg: var(--primary-500);
+    --bg-hover: var(--primary-600);
+    --bg-active: var(--primary-700);
+    --text-color: var(--text-dark);
+}
+.hd-button-group.secondary .hd-button, .hd-button.secondary { 
+    --bg: var(--secondary-600);
+    --bg-hover: var(--secondary-700);
+    --bg-active: var(--secondary-800);
+    --text-color: var(--text-dark);
+}
+.hd-button-group.plain .hd-button, .hd-button.plain {
+    --bg: transparent;
+    --bg-hover: var(--blind-color-1);
+    --bg-active: var(--blind-color-2);
+    box-shadow: none;
+}
+.hd-button-group.plain.primary .hd-button, .hd-button.plain.primary { --text-color: var(--primary-400); }
+.hd-button-group.plain.secondary .hd-button, .hd-button.plain.secondary { --text-color: var(--secondary-400); }
+.hd-button-group.small .hd-button, .hd-button.small {
+    --size: 28px;
+    padding: 4px 8px;
+    font-size: 13px;
+    min-width: 40px;
+    gap: 6px;
+}
+.hd-button-group.large .hd-button, .hd-button.large {
+    --size: 40px;
+    padding: 8px 14px;
+    font-size: 16px;
+    min-width: 90px;
+}
+.hd-button:hover:not(:disabled) {
+    background: var(--bg-hover);
+}
+.hd-button:active:not(:disabled) {
+    background: var(--bg-active);
+}
 /* Dark mode */
 html.dark {
     /* Colors */
@@ -164,8 +263,8 @@ html.dark {
     --gray-200: #2f2f2f;
     --gray-100: #212121;
     /* colors.special */
-    --blind-color-1: #12121298;
-    --blind-color-2: #121212c9;
+    --blind-color-1: rgba(249, 249, 249, 0.08);
+    --blind-color-2: rgba(249, 249, 249, 0.12);
     /* colors.primary */
     --primary-950: #d8f5e3;
     --primary-900: #b1ecc8;

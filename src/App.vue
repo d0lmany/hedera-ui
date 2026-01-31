@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { HdButton } from './components';
+import { HdButton, HdButtonGroup } from './components';
 import { mdiCodeBraces, mdiFileOutline, mdiChip, mdiHomeOutline } from '@mdi/js'
 // @ts-ignore
 import SvgIcon from '@jamescoyle/vue-icon'
+import { ref } from 'vue';
 
 const nav = {
     'Github': mdiCodeBraces,
@@ -58,8 +59,6 @@ const gotoSection = (id: string) => {
                 text. <br>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora aspernatur dignissimos dolore ab, amet est quo odit ad, maiores animi voluptatum, quae repudiandae et quam impedit laudantium excepturi vero consectetur.
                 <br>
-                <hd-button
-                >hello!</hd-button>
             </div>
         </article>
     </main>
